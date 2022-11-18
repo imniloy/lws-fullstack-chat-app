@@ -1,20 +1,25 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Conversation from "./pages/Conversation";
-import Inbox from "./pages/Inbox";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import ConversetionPage from './pages/ConversetionPage';
+import InboxPage from './pages/InboxPage';
+import RegisterPage from './pages/RegisterPage';
+import useAuthCheck from './hooks/useAuthCheck';
+import PublicRoute from './components/routes/PublicRoute';
+import PrivateRoute from './components/routes/PrivateRoute';
 
 function App() {
-  return (
+  const authCheck = useAuthCheck();
+  return authCheck ?
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/inbox" element={<Conversation />} />
-        <Route path="/inbox/:id" element={<Inbox />} />
+        <Route path='/' element={<PublicRoute><LoginPage /></PublicRoute>} />
+        <Route path='/register' element={<PublicRoute><RegisterPage /></PublicRoute>} />
+        <Route path='/inbox' element={<PrivateRoute><ConversetionPage /></PrivateRoute>} />
+        <Route path='/inbox/:id' element={<PrivateRoute><InboxPage /></PrivateRoute>} />
       </Routes>
-    </Router>
-  );
+    </Router> :
+    <div>Auth Checking</div>;
 }
 
 export default App;

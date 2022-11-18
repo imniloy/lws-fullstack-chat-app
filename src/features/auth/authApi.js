@@ -1,68 +1,63 @@
 import apiSlice from './../api/apiSlice';
-import { userLoggedIn } from "./authSlice";
+import { userLoggedIn } from './authSlice';
 
-export const authApi = apiSlice.injectEndpoints({
-    endpoints: (builder) => ({
-        register: builder.mutation({
-            query: (data) => ({
-                url: "/register",
-                method: "POST",
-                body: data,
-            }),
-            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-                try {
-                    const result = await queryFulfilled;
+const AuthApi = apiSlice.injectEndpoints({
+  endpoints: (build) => ({
+    register: build.mutation({
+      query: ({ name, email, password }) => ({
+        url: `/register`,
+        method: 'POST',
+        body: { name, email, password },
+      }),
 
-                    localStorage.setItem(
-                        "auth",
-                        JSON.stringify({
-                            accessToken: result.data.accessToken,
-                            user: result.data.user,
-                        })
-                    );
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const response = await queryFulfilled;
 
-                    dispatch(
-                        userLoggedIn({
-                            accessToken: result.data.accessToken,
-                            user: result.data.user,
-                        })
-                    );
-                } catch (err) {
-                    // do nothing
-                }
-            },
-        }),
-        login: builder.mutation({
-            query: (data) => ({
-                url: "/login",
-                method: "POST",
-                body: data,
-            }),
+          localStorage.setItem('auth', JSON.stringify({
+            accessToken: response?.data?.accessToken,
+            user: response?.data?.user
+          }));
 
-            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-                try {
-                    const result = await queryFulfilled;
+          dispatch(userLoggedIn({
+            accessToken: response?.data?.accessToken,
+            user: response?.data?.user
+          }));
 
-                    localStorage.setItem(
-                        "auth",
-                        JSON.stringify({
-                            accessToken: result.data.accessToken,
-                            user: result.data.user,
-                        })
-                    );
-
-                    dispatch(
-                        userLoggedIn({
-                            accessToken: result.data.accessToken,
-                            user: result.data.user,
-                        })
-                    );
-                } catch (err) {
-                    // do nothing
-                }
-            },
-        }),
+        } catch (e) {
+          console.log(e);
+        };
+      },
     }),
+
+    login: build.mutation({
+      query: ({ email, password }) => ({
+        url: `/login`,
+        method: 'POST',
+        body: { email, password },
+      }),
+
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const response = await queryFulfilled;
+          
+          localStorage.setItem('auth', JSON.stringify({
+            accessToken: response?.data?.accessToken,
+            user: response?.data?.user
+          }));
+
+          dispatch(userLoggedIn({
+            accessToken: response?.data?.accessToken,
+            user: response?.data?.user
+          }));
+
+        } catch (e) {
+          console.log(e);
+        };
+      },
+    }),
+  }),
+  overrideExisting: false,
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation } = AuthApi;
