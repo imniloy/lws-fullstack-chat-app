@@ -11,12 +11,3 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
 });
-
-// import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-// import { userLoggedOut } from '../auth/authSlice';
-
-// const baseQuery = fetchBaseQuery({ baseUrl: process.env.REACT_APP_API_URL });
-
-
-
-// export default apiSlice;
