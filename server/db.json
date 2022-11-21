@@ -1,0 +1,73 @@
+{
+  "users": [
+    {
+      "email": "imniloy8@gmail.com",
+      "password": "$2a$10$J.Fs3Dw3pO29mYnImZW/WOonoHRe9/.Vg1/iP1hmbRWYnFtkBYbQa",
+      "name": "Niloy",
+      "id": 1
+    },
+    {
+      "email": "antu@gmail.com",
+      "password": "$2a$10$J.Fs3Dw3pO29mYnImZW/WOonoHRe9/.Vg1/iP1hmbRWYnFtkBYbQa",
+      "name": "Antu",
+      "id": 2
+    }
+  ],
+  "conversations": [
+    {
+      "participants": "antu@gmail.com-imniloy8@gmail.com",
+      "users": [
+        {
+          "email": "antu@gmail.com",
+          "name": "Antu",
+          "id": 2
+        },
+        {
+          "email": "imniloy8@gmail.com",
+          "password": "$2a$10$J.Fs3Dw3pO29mYnImZW/WOonoHRe9/.Vg1/iP1hmbRWYnFtkBYbQa",
+          "name": "Niloy",
+          "id": 1
+        }
+      ],
+      "message": "Hello from imniloy",
+      "timestamp": 1667804890437,
+      "id": 1
+    }
+  ],
+  "messages": [
+    {
+      "conversationId": 1,
+      "message": "Hello from imniloy",
+      "timestamp": 1667804890437,
+      "receiver": {
+        "email": "antu@gmail.com",
+        "password": "$2a$10$J.Fs3Dw3pO29mYnImZW/WOonoHRe9/.Vg1/iP1hmbRWYnFtkBYbQa",
+        "name": "Antu",
+        "id": 2
+      },
+      "sender": {
+        "email": "imniloy8@gmail.com",
+        "name": "Niloy",
+        "id": 1
+      },
+      "id": 1
+    },
+    {
+      "conversationId": 1,
+      "message": "Hello from Antu",
+      "timestamp": 1667804890437,
+      "receiver": {
+        "email": "imniloy8@gmail.com",
+        "password": "$2a$10$J.Fs3Dw3pO29mYnImZW/WOonoHRe9/.Vg1/iP1hmbRWYnFtkBYbQa",
+        "name": "Niloy",
+        "id": 1
+      },
+      "sender": {
+        "email": "antu@gmail.com",
+        "name": "Antu",
+        "id": 2
+      },
+      "id": 2
+    }
+  ]
+}
