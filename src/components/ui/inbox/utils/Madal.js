@@ -1,27 +1,46 @@
-import React from 'react';
-import Error from './Error';
-import { useState } from 'react';
-import Button from './Button';
-import { useEffect } from 'react';
-import isValidEmail from '../../../validation/isValidEmail';
-import { useDispatch } from 'react-redux';
-import { conversationApi, useAddConversationMutation, useEditConversationMutation, useGetConversationQuery } from './../../../../features/conversations/conversationsApi';
-import { useSelector } from 'react-redux';
+import React from "react";
+import Error from "./Error";
+import { useState } from "react";
+import Button from "./Button";
+import { useEffect } from "react";
+import isValidEmail from "../../../validation/isValidEmail";
+import { useDispatch } from "react-redux";
+import {
+  conversationApi,
+  useAddConversationMutation,
+  useEditConversationMutation,
+  useGetConversationQuery,
+} from "./../../../../features/conversations/conversationsApi";
+import { useSelector } from "react-redux";
 
 const Madal = ({ controller }) => {
   const dispatch = useDispatch();
-  const [to, setTo] = useState('');
-  const [message, setMessage] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+  const [to, setTo] = useState("");
+  const [message, setMessage] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const [userCheck, setUserCheck] = useState(false);
   const { user: loggedInUser } = useSelector((state) => state.auth) || {};
-  const { email: loggedInUserEmail, name: loggedInUserName, id: loggedInUserId } = loggedInUser || {};
+  const {
+    email: loggedInUserEmail,
+    name: loggedInUserName,
+    id: loggedInUserId,
+  } = loggedInUser || {};
   const [participantUser, setParticipantUser] = useState(undefined);
-  const { email: participantUserEmail, name: participantUserName, id: participantUserId } = participantUser || {};
-  const { data: previousConversation } = useGetConversationQuery({ senderUserEmail: loggedInUserEmail, receiverUserEmail: to }, { skip: !userCheck }) || {};
+  const {
+    email: participantUserEmail,
+    name: participantUserName,
+    id: participantUserId,
+  } = participantUser || {};
+  const { data: previousConversation } =
+    useGetConversationQuery(
+      { senderUserEmail: loggedInUserEmail, receiverUserEmail: to },
+      { skip: !userCheck }
+    ) || {};
 
-  const [addConversation, { isSuccess: isAddConversationSuccess }] = useAddConversationMutation();
-  const [editConversation, { isSuccess: isEditConversationSuccess }] = useEditConversationMutation();
+  const [addConversation, { isSuccess: isAddConversationSuccess }] =
+    useAddConversationMutation();
+  const [editConversation, { isSuccess: isEditConversationSuccess }] =
+    useEditConversationMutation();
 
   const handleSearch = (e) => setTo(e.target.value);
 
@@ -31,20 +50,20 @@ const Madal = ({ controller }) => {
       dispatch(conversationApi.endpoints.getUser.initiate(value))
         .unwrap()
         .then((fullfiled) => {
-          fullfiled.length === 0 && setErrorMsg('No user found at this email address');
+          fullfiled.length === 0 &&
+            setErrorMsg("No user found at this email address");
 
           if (fullfiled[0].email !== loggedInUserEmail) {
             setParticipantUser(fullfiled[0]);
             setUserCheck(!userCheck);
-            setErrorMsg('');
+            setErrorMsg("");
           } else if (fullfiled[0].email === loggedInUserEmail) {
             setErrorMsg(`You cannot send messages to yourself`);
           }
-
         })
         .catch((rejected) => {
           console.log(rejected);
-        })
+        });
     }
   };
 
@@ -53,33 +72,58 @@ const Madal = ({ controller }) => {
     e.preventDefault();
     if (previousConversation?.length === 0) {
       await addConversation({
-        participants: `${loggedInUserEmail}-${participantUserEmail}`,
-        users: [
-          {
-            email: loggedInUserEmail,
-            name: loggedInUserName,
-            id: loggedInUserId
-          },
-          {
-            email: participantUserEmail,
-            name: participantUserName,
-            id: participantUserId
-          }
-        ],
-        message,
-        timestamp: new Date().getTime(),
+        sender: {
+          email: loggedInUserEmail,
+          name: loggedInUserName,
+          id: loggedInUserId,
+        },
+        data: {
+          participants: `${loggedInUserEmail}-${participantUserEmail}`,
+          users: [
+            {
+              email: loggedInUserEmail,
+              name: loggedInUserName,
+              id: loggedInUserId,
+            },
+            {
+              email: participantUserEmail,
+              name: participantUserName,
+              id: participantUserId,
+            },
+          ],
+          message,
+          timestamp: new Date().getTime(),
+        },
       });
     } else if (previousConversation?.length > 0) {
       const conversationId = previousConversation[0]?.id;
       await editConversation({
-        id: conversationId, data: {
+        id: conversationId,
+        sender: {
+          email: loggedInUserEmail,
+          name: loggedInUserName,
+          id: loggedInUserId,
+        },
+        data: {
           participants: `${loggedInUserEmail}-${participantUserEmail}`,
+          users: [
+            {
+              email: loggedInUserEmail,
+              name: loggedInUserName,
+              id: loggedInUserId,
+            },
+            {
+              email: participantUserEmail,
+              name: participantUserName,
+              id: participantUserId,
+            },
+          ],
           message,
           timestamp: new Date().getTime(),
           id: conversationId,
-        }
+        },
       });
-    };
+    }
   };
 
   // this useEffect hooks use for calling the debounceHandler function after certain delay ..
@@ -96,14 +140,21 @@ const Madal = ({ controller }) => {
   }, [isAddConversationSuccess, isEditConversationSuccess, controller]);
 
   // disableSubmitButton is used to disable submit button. while, certain conditions aren't satisfied
-  const disableSubmitButton = (participantUserEmail?.length === 0 || message.length === 0 || errorMsg.length > 0) ? true : false;
-
+  const disableSubmitButton =
+    participantUserEmail?.length === 0 ||
+    message.length === 0 ||
+    errorMsg.length > 0
+      ? true
+      : false;
 
   // add a conversation to the server ..
 
   return (
     <div>
-      <div className={`fixed w-full h-full inset-0 z-10 bg-black/50 cursor-pointer`} onClick={controller} />
+      <div
+        className={`fixed w-full h-full inset-0 z-10 bg-black/50 cursor-pointer`}
+        onClick={controller}
+      />
       <div className="rounded w-[400px] lg:w-[600px] space-y-8 bg-white p-10 absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Send message
@@ -155,6 +206,6 @@ const Madal = ({ controller }) => {
       </div>
     </div>
   );
-}
+};
 
 export default Madal;
