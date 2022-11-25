@@ -34,7 +34,6 @@ const ChatBody = () => {
   }
 
   if (!isLoading && !isError && isSuccess) {
-    console.log(messages);
     content = (
       <div className="w-full grid conversation-row-grid">
         <MessagesHeader message={messages[0]} />

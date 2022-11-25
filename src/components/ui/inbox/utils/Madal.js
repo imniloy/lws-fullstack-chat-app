@@ -5,6 +5,7 @@ import Button from "./Button";
 import { useEffect } from "react";
 import isValidEmail from "../../../validation/isValidEmail";
 import { useDispatch } from "react-redux";
+import { customAlphabet } from "nanoid";
 import {
   conversationApi,
   useAddConversationMutation,
@@ -19,18 +20,21 @@ const Madal = ({ controller }) => {
   const [message, setMessage] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [userCheck, setUserCheck] = useState(false);
+  const [participantUser, setParticipantUser] = useState(undefined);
+  const nanoid = customAlphabet("ABCDEFGHIJ1234567890", 16);
   const { user: loggedInUser } = useSelector((state) => state.auth) || {};
   const {
     email: loggedInUserEmail,
     name: loggedInUserName,
     id: loggedInUserId,
   } = loggedInUser || {};
-  const [participantUser, setParticipantUser] = useState(undefined);
+
   const {
     email: participantUserEmail,
     name: participantUserName,
     id: participantUserId,
   } = participantUser || {};
+
   const { data: previousConversation } =
     useGetConversationQuery(
       { senderUserEmail: loggedInUserEmail, receiverUserEmail: to },
@@ -39,6 +43,7 @@ const Madal = ({ controller }) => {
 
   const [addConversation, { isSuccess: isAddConversationSuccess }] =
     useAddConversationMutation();
+
   const [editConversation, { isSuccess: isEditConversationSuccess }] =
     useEditConversationMutation();
 
@@ -66,7 +71,7 @@ const Madal = ({ controller }) => {
         });
     }
   };
-
+  
   // handleSubmit is used for sending the message to the server [You can think sending msg to other person ] ..
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,6 +98,7 @@ const Madal = ({ controller }) => {
           ],
           message,
           timestamp: new Date().getTime(),
+          id: nanoid(),
         },
       });
     } else if (previousConversation?.length > 0) {

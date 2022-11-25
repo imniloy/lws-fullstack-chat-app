@@ -26,8 +26,6 @@ const MessagesFooter = ({ info }) => {
   const [editConversation, { data }] = useEditConversationMutation();
   const disableSubmitButton = message.length > 0 ? false : true;
 
-  console.log(sender);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 

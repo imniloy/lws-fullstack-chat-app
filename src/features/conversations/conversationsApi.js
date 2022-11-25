@@ -24,6 +24,16 @@ export const conversationApi = apiSlice.injectEndpoints({
       }),
 
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        const updateCache = dispatch(
+          apiSlice.util.updateQueryData(
+            "getConversations",
+            arg?.sender?.email,
+            (draft) => {
+              draft.unshift(arg?.data);
+            }
+          )
+        );
+
         try {
           const connversation = await queryFulfilled;
           const { sender } = arg || {};
@@ -37,7 +47,6 @@ export const conversationApi = apiSlice.injectEndpoints({
           );
 
           if (id) {
-            console.log(`im ${id}`);
             const response = await dispatch(
               messageApi.endpoints.addMessage.initiate({
                 conversationId: id,
@@ -49,7 +58,7 @@ export const conversationApi = apiSlice.injectEndpoints({
             ).unwrap();
           }
         } catch (err) {
-          console.log(err);
+          updateCache.undo();
         }
       },
     }),
@@ -62,11 +71,21 @@ export const conversationApi = apiSlice.injectEndpoints({
       }),
 
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        try {
-          // optimistic update section starts here ..
-          
-          // optimistic update section end here ..
+        // optimistic update section starts here ..
+        const updateCache = dispatch(
+          apiSlice.util.updateQueryData(
+            "getConversations",
+            arg?.sender?.email,
+            (draft) => {
+              const draftConversation = draft.find((e) => e?.id == arg?.id);
+              draftConversation.message = arg?.data?.message;
+              draftConversation.timestamp = arg?.data?.timestamp;
+            }
+          )
+        );
 
+        // optimistic update section end here ..
+        try {
           const connversation = await queryFulfilled;
           const { sender } = arg || {};
           const { message, timestamp, users } = arg?.data || {};
@@ -79,7 +98,6 @@ export const conversationApi = apiSlice.injectEndpoints({
           );
 
           if (id) {
-            console.log(`im ${id}`);
             const response = await dispatch(
               messageApi.endpoints.addMessage.initiate({
                 conversationId: id,
@@ -89,9 +107,22 @@ export const conversationApi = apiSlice.injectEndpoints({
                 sender: senderUser,
               })
             ).unwrap();
+
+            // update messages pesimastically starts ...
+            console.log(response);
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getMessages",
+                response?.conversationId,
+                (draft) => {
+                  draft.push(response);
+                }
+              )
+            );
+            // update messages pesimastically ends ...
           }
         } catch (err) {
-          console.log(err);
+          updateCache.undo();
         }
       },
     }),

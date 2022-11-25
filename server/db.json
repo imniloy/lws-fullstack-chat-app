@@ -17,28 +17,15 @@
       "password": "$2a$10$jvutN9sybUYX0S5uGfQGsO8bV6hVAr1PwKu2ryXyMR0BgGoeGcXBi",
       "name": "sumit",
       "id": 3
+    },
+    {
+      "email": "ui.niloy@gmail.com",
+      "password": "$2a$10$jvutN9sybUYX0S5uGfQGsO8bV6hVAr1PwKu2ryXyMR0BgGoeGcXBi",
+      "name": "uiNiloy",
+      "id": 4
     }
   ],
   "conversations": [
-    {
-      "participants": "antu@gmail.com-imniloy8@gmail.com",
-      "users": [
-        {
-          "email": "antu@gmail.com",
-          "name": "Antu",
-          "id": 2
-        },
-        {
-          "email": "imniloy8@gmail.com",
-          "password": "$2a$10$J.Fs3Dw3pO29mYnImZW/WOonoHRe9/.Vg1/iP1hmbRWYnFtkBYbQa",
-          "name": "Niloy",
-          "id": 1
-        }
-      ],
-      "message": "Hello from imniloy",
-      "timestamp": 1667804890437,
-      "id": 1
-    },
     {
       "participants": "sumit@learnwithsumit.com-imniloy8@gmail.com",
       "users": [
@@ -53,170 +40,43 @@
           "id": 3
         }
       ],
-      "message": "3rd hi from sumit",
-      "timestamp": 1669091632531,
-      "id": 2
-    },
-    {
-      "participants": "sumit@learnwithsumit.com-antu@gmail.com",
-      "users": [
-        {
-          "email": "sumit@learnwithsumit.com",
-          "name": "sumit",
-          "id": 3
-        },
-        {
-          "email": "antu@gmail.com",
-          "name": "Antu",
-          "id": 2
-        }
-      ],
-      "message": "3rd hi for antu",
-      "timestamp": 1669135065586,
-      "id": 3,
-      "conversationId": "3",
-      "receiver": {
-        "email": "antu@gmail.com",
-        "name": "Antu",
-        "id": 2
-      },
-      "sender": {
-        "email": "sumit@learnwithsumit.com",
-        "name": "sumit",
-        "id": 3
-      }
+      "message": "hlw",
+      "timestamp": 1669343874129,
+      "id": "9FBBFB11J6DIGB20"
     }
   ],
   "messages": [
     {
-      "conversationId": 1,
-      "message": "Hello from imniloy",
-      "timestamp": 1667804890437,
+      "conversationId": "9FBBFB11J6DIGB20",
+      "message": "Hi",
+      "timestamp": 1669343528231,
       "receiver": {
-        "email": "antu@gmail.com",
-        "password": "$2a$10$J.Fs3Dw3pO29mYnImZW/WOonoHRe9/.Vg1/iP1hmbRWYnFtkBYbQa",
-        "name": "Antu",
-        "id": 2
-      },
-      "sender": {
         "email": "imniloy8@gmail.com",
         "name": "Niloy",
         "id": 1
+      },
+      "sender": {
+        "email": "sumit@learnwithsumit.com",
+        "name": "sumit",
+        "id": 3
       },
       "id": 1
     },
     {
-      "conversationId": 1,
-      "message": "Hello from Antu",
-      "timestamp": 1667804890437,
+      "conversationId": "9FBBFB11J6DIGB20",
+      "message": "hlw",
+      "timestamp": 1669343874129,
       "receiver": {
         "email": "imniloy8@gmail.com",
-        "password": "$2a$10$J.Fs3Dw3pO29mYnImZW/WOonoHRe9/.Vg1/iP1hmbRWYnFtkBYbQa",
         "name": "Niloy",
         "id": 1
       },
       "sender": {
-        "email": "antu@gmail.com",
-        "name": "Antu",
-        "id": 2
+        "email": "sumit@learnwithsumit.com",
+        "name": "sumit",
+        "id": 3
       },
       "id": 2
-    },
-    {
-      "conversationId": 2,
-      "message": "hi from sumit",
-      "timestamp": 1669084272871,
-      "receiver": {
-        "email": "imniloy8@gmail.com",
-        "name": "Niloy",
-        "id": 1
-      },
-      "sender": {
-        "email": "sumit@learnwithsumit.com",
-        "name": "sumit",
-        "id": 3
-      },
-      "id": 3
-    },
-    {
-      "conversationId": 3,
-      "message": "hi from sumit",
-      "timestamp": 1669084837510,
-      "receiver": {
-        "email": "antu@gmail.com",
-        "name": "Antu",
-        "id": 2
-      },
-      "sender": {
-        "email": "sumit@learnwithsumit.com",
-        "name": "sumit",
-        "id": 3
-      },
-      "id": 4
-    },
-    {
-      "conversationId": 2,
-      "message": "2nd hi from sumit",
-      "timestamp": 1669091050673,
-      "receiver": {
-        "email": "imniloy8@gmail.com",
-        "name": "Niloy",
-        "id": 1
-      },
-      "sender": {
-        "email": "sumit@learnwithsumit.com",
-        "name": "sumit",
-        "id": 3
-      },
-      "id": 7
-    },
-    {
-      "conversationId": 2,
-      "message": "3rd hi from sumit",
-      "timestamp": 1669091632531,
-      "receiver": {
-        "email": "imniloy8@gmail.com",
-        "name": "Niloy",
-        "id": 1
-      },
-      "sender": {
-        "email": "sumit@learnwithsumit.com",
-        "name": "sumit",
-        "id": 3
-      },
-      "id": 8
-    },
-    {
-      "conversationId": 3,
-      "message": "2nd hi for antu",
-      "timestamp": 1669135034089,
-      "receiver": {
-        "email": "antu@gmail.com",
-        "name": "Antu",
-        "id": 2
-      },
-      "sender": {
-        "email": "sumit@learnwithsumit.com",
-        "name": "sumit",
-        "id": 3
-      },
-      "id": 9
-    },
-    {
-      "conversationId": 3,
-      "message": "3rd hi for antu",
-      "timestamp": 1669135065586,
-      "receiver": {
-        "email": "antu@gmail.com",
-        "name": "Antu",
-        "id": 2
-      },
-      "sender": {
-        "email": "sumit@learnwithsumit.com",
-        "name": "sumit",
-        "id": 3
-      },
-      "id": 10
     }
   ]
 }

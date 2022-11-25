@@ -2,7 +2,7 @@ import moment from 'moment/moment';
 import React from 'react';
 import gravatarUrl from 'gravatar-url';
 
-const ChatItem = ({ id, name, email, message, timestamp }) => {
+const ChatItem = ({ name, email, message, timestamp }) => {
 
   return (
 
